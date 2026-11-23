@@ -1,30 +1,28 @@
 # Aplikasi Presensi Siswa
 
-Aplikasi Presensi Siswa adalah website berbasis **PHP Native dengan konsep Object Oriented Programming (OOP)** untuk mengelola kelas, data siswa, dan mencatat kehadiran melalui simulasi tap kartu RFID menggunakan NISN. Project ini dibuat untuk tugas **Uji Unit Kompetensi (UUK) SMK TI Airlangga Samarinda tahun pelajaran 2026/2027**.
+## Tentang Aplikasi
 
-## Teknologi
+Aplikasi Presensi Siswa adalah website untuk mengelola data kelas, data siswa, dan mencatat kehadiran siswa melalui simulasi tap kartu menggunakan NISN. Website dibuat menggunakan PHP Native dengan konsep OOP dan database MariaDB.
 
-PHP Native (OOP), MariaDB/MySQL, PDO, HTML, CSS, JavaScript, Laragon, dan Visual Studio Code.
+## Fitur yang Dibuat
 
-## Fitur
+- **Login dan logout:** admin masuk dan keluar dari aplikasi.
+- **Data kelas:** menampilkan, menambah, mengubah, dan menghapus kelas. Kelas yang masih mempunyai siswa tidak dapat dihapus.
+- **Data siswa:** menampilkan, menambah, mengubah, menghapus, dan mencari siswa menggunakan nama atau NISN.
+- **Tap kartu:** memasukkan NISN untuk mencatat kehadiran siswa.
+- **Rekap presensi:** melihat catatan kehadiran, melakukan pencarian dan filter, serta menghapus log presensi.
 
-- Login dan logout administrator dengan session.
-- Dashboard aplikasi.
-- Tambah, lihat, ubah, dan hapus kelas.
-- Tambah, lihat, ubah, dan hapus siswa.
-- Pencarian siswa berdasarkan nama atau NISN, termasuk sebagian nama.
-- Simulasi tap kartu RFID menggunakan NISN.
-- Rekap presensi, pencarian, filter tanggal/kelas, dan penghapusan log.
-- Validasi NISN 10 digit dan pembatasan penghapusan kelas yang masih memiliki siswa.
-
-## Struktur folder
+## Struktur Folder Project
 
 ```text
 presensi siswa/
 ├── assets/
-│   ├── css/style.css
-│   └── js/script.js
-├── config/Database.php
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
+├── config/
+│   └── Database.php
 ├── includes/
 │   ├── auth.php
 │   ├── header.php
@@ -49,111 +47,116 @@ presensi siswa/
 │   ├── index.php
 │   ├── tap.php
 │   └── hapus.php
-├── docs/
-│   ├── erd.png                  # Tambahkan gambar ERD
-│   └── screenshots/
 ├── index.php
 ├── login.php
 ├── logout.php
 ├── schema.sql
 ├── seed_admin.php
+├── tes_koneksi.php
+├── tes_oop.php
 └── README.md
 ```
 
-## Cara instalasi
+Struktur di atas menunjukkan letak file utama aplikasi. Setiap folder memisahkan tugas supaya program lebih mudah dicari dan diperbaiki.
 
-1. Instal Laragon dan jalankan Apache serta MySQL/MariaDB.
-2. Simpan project ke `C:\laragon\www\presensi siswa\`.
-3. Jalankan `schema.sql` melalui phpMyAdmin atau HeidiSQL untuk membuat database dan tabel. Sesuaikan nama database dengan konfigurasi project.
-4. Periksa koneksi di `config/Database.php`.
-5. Jika diperlukan, jalankan `seed_admin.php` satu kali untuk membuat akun administrator.
-6. Akses `http://localhost/presensi%20siswa/` melalui browser.
-7. Login dengan akun administrator yang telah dibuat.
+## Penjelasan Folder dan File
 
-> **Akun demo:** Isi username dan password akun **khusus demo** jika diperlukan. Jangan mengunggah password pribadi atau konfigurasi rahasia.
->
-> Username: `[isi username demo]`  
-> Password: `[isi password demo]`
+### File di Folder Utama
 
-## Database dan ERD
+- `index.php` — halaman dashboard atau halaman utama setelah admin masuk.
+- `login.php` — halaman untuk memasukkan username dan password admin. Setelah login berhasil, pengguna diarahkan ke halaman aplikasi sesuai pengaturan pada kode login.
+- `logout.php` — mengakhiri sesi login lalu mengarahkan pengguna kembali ke halaman login.
+- `schema.sql` — perintah SQL untuk membuat struktur database dan tabel yang digunakan aplikasi.
+- `seed_admin.php` — digunakan untuk membuat akun admin awal.
+- `tes_koneksi.php` — file untuk mencoba apakah koneksi PHP ke database berjalan.
+- `tes_oop.php` — file untuk mencoba penerapan class dan konsep OOP.
+- `README.md` — berisi penjelasan project dan kegunaan file-file di dalamnya.
 
-Aplikasi menggunakan tabel `users`, `kelas`, `siswa`, dan `presensi`. Satu kelas dapat memiliki banyak siswa, dan satu siswa dapat memiliki banyak catatan presensi. Tabel `users` digunakan untuk autentikasi administrator.
+### Folder `assets`
 
-**ERD:** Satu kelas memiliki banyak siswa, dan satu siswa dapat memiliki banyak catatan presensi.
+Folder ini menyimpan file tampilan website.
 
-## Foto tampilan aplikasi
+- `assets/css/style.css` — mengatur warna, ukuran, jarak, tombol, dan tampilan halaman.
+- `assets/js/script.js` — berisi JavaScript untuk interaksi pada website.
 
-### Dashboard
+### Folder `config`
 
-Tampilan dashboard setelah administrator masuk.
+- `config/Database.php` — mengatur koneksi ke database menggunakan PDO. Koneksi ini dipakai oleh model untuk menjalankan query.
 
-![Dashboard Presensi Siswa](docs/screenshots/dashboard.png)
+### Folder `includes`
 
-### Pencarian siswa berdasarkan NISN
+Folder ini menyimpan bagian yang digunakan berulang di beberapa halaman.
 
-Pencarian dengan NISN yang ada di database menampilkan satu data siswa yang sesuai.
+- `includes/auth.php` — memeriksa sesi login agar halaman khusus admin tidak dibuka sembarangan.
+- `includes/header.php` — bagian awal tampilan halaman, termasuk pemanggilan CSS.
+- `includes/navbar.php` — menu navigasi untuk berpindah ke dashboard, kelas, siswa, tap kartu, dan rekap presensi.
+- `includes/footer.php` — bagian penutup tampilan halaman.
 
-![Pencarian NISN ditemukan](docs/screenshots/pencarian-nisn-berhasil.png)
+### Folder `models`
 
-Jika NISN tidak ditemukan, halaman menampilkan keterangan **Tidak ada data siswa**.
+Folder ini berisi class PHP yang mengurus proses dan data aplikasi.
 
-![Pencarian NISN tidak ditemukan](docs/screenshots/pencarian-nisn-tidak-ditemukan.png)
+- `models/BaseModel.php` — class dasar yang menyiapkan koneksi database untuk model lainnya.
+- `models/Kelas.php` — mengurus data kelas di database, seperti mengambil, menambah, mengubah, dan menghapus kelas.
+- `models/Siswa.php` — mengurus data siswa, termasuk pencarian berdasarkan nama atau NISN.
+- `models/Presensi.php` — mengurus pencatatan tap kartu dan data rekap presensi.
 
-## Hasil pengujian UUK
+### Folder `kelas`
 
-Tabel berikut didasarkan pada **screenshot yang dilampirkan**. Status belum terverifikasi berarti bukti screenshot belum tersedia atau belum menunjukkan hasil sesuai soal.
+- `kelas/index.php` — menampilkan daftar kelas.
+- `kelas/tambah.php` — formulir untuk menambahkan kelas.
+- `kelas/edit.php` — formulir untuk mengubah data kelas.
+- `kelas/hapus.php` — memproses penghapusan kelas, dengan pembatasan jika kelas masih memiliki siswa.
 
-| No. | Skenario | Hasil yang diharapkan | Hasil dari screenshot | Status |
-|---|---|---|---|---|
-| 1 | Login menggunakan password salah | Login ditolak dan muncul pesan umum | Muncul pesan **Username atau password salah!** | Sesuai |
-| 2 | Mengakses halaman terlindungi tanpa login | Dialihkan ke halaman login | Browser menampilkan **404 Not Found** pada URL `localhost/presensi_siswa/login.php` | Belum sesuai / perlu diuji ulang |
-| 3 | Menambahkan siswa dengan NISN 9 digit | Ditolak, pesan validasi jelas, dan input tetap terisi | Browser menolak input dengan pesan **Please match the requested format**; formulir tetap terisi | Ditolak, tetapi pesan server belum terlihat |
-| 4 | Menambahkan siswa dengan NISN duplikat | Data ditolak dengan pesan jelas | Muncul pesan **NISN sudah terdaftar atau kelas tidak valid.** | Ditolak; pesan masih umum |
-| 5 | Tap kartu menggunakan NISN tidak terdaftar | Presensi ditolak | Screenshot belum dilampirkan | Belum terverifikasi |
-| 6 | Tap kartu menggunakan NISN terdaftar | Presensi berhasil dan tampil di rekap hari ini dengan waktu otomatis | Screenshot belum dilampirkan | Belum terverifikasi |
-| 7 | Menghapus kelas yang masih memiliki siswa | Penghapusan ditolak | Muncul pesan **Kelas tidak bisa dihapus karena masih memiliki siswa.** | Sesuai |
-| 8 | Mencari siswa menggunakan sebagian nama | Hanya siswa yang namanya cocok ditampilkan | Kata kunci **Far** menampilkan siswa **Farles** | Sesuai |
+Halaman dalam folder `kelas` menggunakan class `models/Kelas.php` untuk mengolah data kelas.
 
-### Bukti 1 — Login menggunakan password salah
+### Folder `siswa`
 
-![Login salah](docs/screenshots/uji-1-login-salah.png)
+- `siswa/index.php` — menampilkan daftar siswa dan kolom pencarian nama atau NISN.
+- `siswa/tambah.php` — formulir untuk menambahkan siswa baru.
+- `siswa/edit.php` — formulir untuk mengubah data siswa.
+- `siswa/hapus.php` — memproses penghapusan siswa.
 
-### Bukti 2 — Mengakses halaman tanpa login
+Halaman dalam folder `siswa` menggunakan `models/Siswa.php`. Formulir siswa juga membutuhkan data kelas agar siswa dapat ditempatkan pada kelas yang sesuai.
 
-Screenshot yang tersedia menunjukkan `404 Not Found`, sehingga perlu pengujian ulang menggunakan alamat folder project yang benar.
+### Folder `presensi`
 
-![Akses tanpa login](docs/screenshots/uji-2-akses-tanpa-login.png)
+- `presensi/index.php` — menampilkan rekap presensi dan menyediakan pencarian atau filter.
+- `presensi/tap.php` — formulir simulasi tap kartu dengan memasukkan NISN siswa.
+- `presensi/hapus.php` — memproses penghapusan catatan presensi.
 
-### Bukti 3 — Menambahkan siswa dengan NISN 9 digit
+Halaman dalam folder `presensi` menggunakan `models/Presensi.php` untuk mengakses data presensi.
 
-NISN 9 digit ditolak oleh validasi browser. Untuk membuktikan validasi server-side, perlu screenshot pesan PHP setelah form dikirim.
+## Alur Kerja Aplikasi
 
-![NISN 9 digit](docs/screenshots/uji-3-nisn-9-digit.png)
+1. Admin membuka `login.php` dan memasukkan username serta password.
+2. Setelah berhasil masuk, admin menggunakan menu navigasi untuk membuka fitur yang dibutuhkan.
+3. Admin mengisi data kelas melalui halaman pada folder `kelas`.
+4. Admin mengisi data siswa melalui halaman pada folder `siswa`. Setiap siswa terhubung dengan kelas.
+5. Saat melakukan simulasi tap kartu, admin membuka `presensi/tap.php` dan memasukkan NISN.
+6. `presensi/tap.php` meminta `models/Presensi.php` memproses NISN dan menyimpan presensi jika valid.
+7. Catatan kehadiran dapat dilihat melalui `presensi/index.php`.
+8. Setelah selesai, admin memilih logout untuk mengakhiri sesi.
 
-### Bukti 4 — Menambahkan siswa dengan NISN duplikat
+## Hubungan dengan Database
 
-![NISN duplikat](docs/screenshots/uji-4-nisn-duplikat.png)
+Database aplikasi terdiri dari empat tabel utama:
 
-### Bukti 5 — Tap kartu dengan NISN tidak terdaftar
+- `users` — menyimpan akun admin.
+- `kelas` — menyimpan nama kelas dan jurusan.
+- `siswa` — menyimpan NISN, nama, alamat, dan kelas siswa.
+- `presensi` — menyimpan NISN serta tanggal dan waktu kehadiran.
 
-**Belum ada screenshot.** Tambahkan `docs/screenshots/uji-5-tap-ditolak.png` setelah pengujian.
+Satu kelas dapat mempunyai banyak siswa. Satu siswa juga dapat mempunyai banyak catatan presensi. Hubungan ini dijaga menggunakan foreign key pada database.
 
-### Bukti 6 — Tap kartu dengan NISN terdaftar
+## Teknologi
 
-**Belum ada screenshot.** Tambahkan `docs/screenshots/uji-6-tap-berhasil.png` dan screenshot rekap presensi setelah pengujian.
+PHP Native (OOP), MariaDB/MySQL, PDO, HTML, CSS, JavaScript, dan Laragon.
 
-### Bukti 7 — Menghapus kelas yang masih memiliki siswa
+## Kegunaan Website
 
-![Hapus kelas ditolak](docs/screenshots/uji-7-hapus-kelas.png)
-
-### Bukti 8 — Mencari siswa dengan sebagian nama
-
-![Pencarian sebagian nama](docs/screenshots/uji-8-cari-sebagian-nama.png)
-
-## Keamanan aplikasi
-
-Aplikasi dirancang menggunakan session untuk autentikasi, PDO Prepared Statement untuk query dengan input pengguna, `password_hash()` dan `password_verify()` untuk password, serta `htmlspecialchars()` saat menampilkan data. Hubungan foreign key digunakan untuk menjaga konsistensi data.
+Website ini digunakan untuk membantu admin menyimpan dan mengatur data kelas serta siswa. Admin juga bisa mencatat kehadiran menggunakan NISN, mencari siswa dengan cepat, dan melihat kembali hasil presensi berdasarkan data yang tersimpan.
 
 ## Kesimpulan
 
-Aplikasi Presensi Siswa memanfaatkan PHP OOP dan database relasional untuk mengelola siswa, kelas, dan riwayat kehadiran. Pengujian dilakukan untuk memastikan validasi input, autentikasi, pencarian, dan hubungan data bekerja sesuai ketentuan UUK.
+Aplikasi Presensi Siswa memudahkan pengelolaan data siswa, kelas, dan kehadiran dalam satu website. Simulasi tap kartu memakai NISN, sehingga presensi dapat dicatat dan dilihat kembali melalui halaman rekap. Pembagian file ke dalam beberapa folder juga membuat program lebih rapi dan mudah dipahami.
