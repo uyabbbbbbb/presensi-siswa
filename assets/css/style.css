@@ -1,8 +1,4 @@
 
-/* ==========================================
-   iOS LIQUID GLASS - APLIKASI PRESENSI
-   ========================================== */
-
 :root {
     --bg: #e8edf4;
     --text: #1d1d1f;
@@ -58,9 +54,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ==========================================
-   TYPOGRAPHY
-   ========================================== */
+
 
 h1, h2, h3 {
     color: #1c1d22;
@@ -100,9 +94,8 @@ a:hover {
     color: #111;
 }
 
-/* ==========================================
-   LIQUID GLASS EFFECT
-   ========================================== */
+
+
 
 nav,
 form,
@@ -121,9 +114,7 @@ footer {
         var(--shadow);
 }
 
-/* ==========================================
-   FLOATING NAVBAR
-   ========================================== */
+
 
 nav {
     position: sticky;
@@ -190,9 +181,8 @@ nav a:active {
     transform: scale(0.95);
 }
 
-/* ==========================================
-   DIVIDER
-   ========================================== */
+
+
 
 hr {
     border: none;
@@ -200,9 +190,8 @@ hr {
     margin: 28px 0;
 }
 
-/* ==========================================
-   GLASS FORM
-   ========================================== */
+
+
 
 form {
     padding: 28px;
@@ -271,9 +260,7 @@ textarea::placeholder {
     color: #999da7;
 }
 
-/* ==========================================
-   iOS BUTTON
-   ========================================== */
+
 
 button,
 input[type="submit"] {
@@ -318,9 +305,9 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* ==========================================
-   GLASS TABLE
-   ========================================== */
+
+
+
 
 table {
     width: 100%;
@@ -367,9 +354,8 @@ tbody tr:hover td {
     background: rgba(255,255,255,0.4);
 }
 
-/* ==========================================
-   TABLE ACTION BUTTONS
-   ========================================== */
+
+
 
 td form {
     display: inline-block;
@@ -411,9 +397,8 @@ td button:hover {
     text-decoration: none;
 }
 
-/* ==========================================
-   FOOTER
-   ========================================== */
+
+
 
 footer {
     margin-top: 30px;
@@ -429,9 +414,8 @@ footer p {
     color: #747985;
 }
 
-/* ==========================================
-   ANIMATION
-   ========================================== */
+
+
 
 @keyframes glassAppear {
     from {
@@ -453,9 +437,7 @@ body > table {
     animation: glassAppear 0.45s ease both;
 }
 
-/* ==========================================
-   MOBILE - iPHONE / ANDROID
-   ========================================== */
+
 
 @media (max-width: 768px) {
 
@@ -478,7 +460,6 @@ body > table {
         font-size: 13px;
     }
 
-    /* Navbar swipe */
 
     nav {
         top: 10px;
@@ -502,7 +483,7 @@ body > table {
         scroll-snap-align: start;
     }
 
-    /* Form */
+
 
     form {
         width: 100%;
@@ -532,7 +513,7 @@ body > table {
         width: 100%;
     }
 
-    /* Tabel bisa digeser */
+
 
     table {
         display: block;
@@ -572,9 +553,9 @@ body > table {
     }
 }
 
-/* ==========================================
-   SMALL PHONES
-   ========================================== */
+
+
+
 
 @media (max-width: 380px) {
 
@@ -595,9 +576,7 @@ body > table {
     }
 }
 
-/* ==========================================
-   ACCESSIBILITY
-   ========================================== */
+
 
 @media (prefers-reduced-motion: reduce) {
 
