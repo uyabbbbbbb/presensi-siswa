@@ -1,3 +1,4 @@
+
 <?php
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../models/Siswa.php';
@@ -22,10 +23,13 @@ require_once __DIR__ . '/../includes/navbar.php';
 
 <br><br>
 
-<form method="GET">
-    <input type="text" name="cari"
-           placeholder="Cari nama atau NISN"
-           value="<?= htmlspecialchars($keyword) ?>">
+<form method="GET" action="index.php">
+    <input
+        type="text"
+        name="cari"
+        placeholder="Cari nama atau NISN"
+        value="<?= htmlspecialchars($keyword) ?>"
+    >
 
     <button type="submit">Cari</button>
     <a href="index.php">Reset</a>
@@ -47,31 +51,46 @@ require_once __DIR__ . '/../includes/navbar.php';
         <th>Aksi</th>
     </tr>
 
-    <?php foreach ($dataSiswa as $no => $siswa): ?>
-    <tr>
-        <td><?= $no + 1 ?></td>
-        <td><?= htmlspecialchars($siswa['nisn']) ?></td>
-        <td><?= htmlspecialchars($siswa['nama']) ?></td>
-        <td><?= htmlspecialchars($siswa['alamat'] ?? '') ?></td>
-        <td><?= htmlspecialchars($siswa['nama_kelas']) ?></td>
-        <td>
-            <a href="edit.php?nisn=<?= urlencode($siswa['nisn']) ?>">
-                Edit
-            </a>
+    <?php if (empty($dataSiswa)): ?>
+        <tr>
+            <td colspan="6">Tidak ada data siswa.</td>
+        </tr>
+    <?php else: ?>
 
-            <form method="POST" action="hapus.php"
-                  style="display:inline">
-                <input type="hidden" name="nisn"
-                       value="<?= htmlspecialchars($siswa['nisn']) ?>">
+        <?php foreach ($dataSiswa as $no => $siswa): ?>
+            <tr>
+                <td><?= $no + 1 ?></td>
+                <td><?= htmlspecialchars($siswa['nisn']) ?></td>
+                <td><?= htmlspecialchars($siswa['nama']) ?></td>
+                <td><?= htmlspecialchars($siswa['alamat'] ?? '') ?></td>
+                <td><?= htmlspecialchars($siswa['nama_kelas']) ?></td>
+                <td>
+                    <a href="edit.php?nisn=<?= urlencode($siswa['nisn']) ?>">
+                        Edit
+                    </a>
 
-                <button type="submit"
-                        onclick="return confirm('Hapus siswa ini?')">
-                    Hapus
-                </button>
-            </form>
-        </td>
-    </tr>
-    <?php endforeach; ?>
+                    <form method="POST"
+                          action="hapus.php"
+                          style="display:inline">
+
+                        <input
+                            type="hidden"
+                            name="nisn"
+                            value="<?= htmlspecialchars($siswa['nisn']) ?>"
+                        >
+
+                        <button
+                            type="submit"
+                            onclick="return confirm('Yakin ingin menghapus siswa ini?')"
+                        >
+                            Hapus
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+
+    <?php endif; ?>
 </table>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

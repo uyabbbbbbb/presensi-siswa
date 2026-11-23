@@ -9,7 +9,7 @@ class Siswa extends BaseModel {
         parent::__construct();
     }
 
-    // Menampilkan seluruh data siswa
+    // Menampilkan semua siswa
     public function getAll() {
         $sql = "SELECT siswa.*, kelas.nama_kelas
                 FROM siswa
@@ -18,26 +18,41 @@ class Siswa extends BaseModel {
                 ORDER BY siswa.nama ASC";
 
         $stmt = $this->pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Mencari siswa berdasarkan nama atau NISN
+    public function cari($keyword) {
+        $sql = "SELECT siswa.*, kelas.nama_kelas
+                FROM siswa
+                INNER JOIN kelas
+                ON siswa.id_kelas = kelas.id_kelas
+                WHERE siswa.nama LIKE :nama
+                   OR siswa.nisn LIKE :nisn
+                ORDER BY siswa.nama ASC";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':nama' => '%' . $keyword . '%',
+            ':nisn' => '%' . $keyword . '%'
+        ]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Mencari siswa berdasarkan NISN
+    // Mengambil siswa berdasarkan NISN
     public function getByNisn($nisn) {
         $sql = "SELECT * FROM siswa
                 WHERE nisn = :nisn
                 LIMIT 1";
 
         $stmt = $this->pdo->prepare($sql);
-
-        $stmt->execute([
-            ':nisn' => $nisn
-        ]);
+        $stmt->execute([':nisn' => $nisn]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Alias untuk mengambil siswa berdasarkan NISN
     public function getById($nisn) {
         return $this->getByNisn($nisn);
     }
@@ -59,7 +74,7 @@ class Siswa extends BaseModel {
         ]);
     }
 
-    // Mengedit data siswa
+    // Mengedit siswa
     public function edit($nisn, $nama, $alamat, $id_kelas) {
         $sql = "UPDATE siswa
                 SET nama = :nama,
@@ -83,9 +98,6 @@ class Siswa extends BaseModel {
                 WHERE nisn = :nisn";
 
         $stmt = $this->pdo->prepare($sql);
-
-        return $stmt->execute([
-            ':nisn' => $nisn
-        ]);
+        return $stmt->execute([':nisn' => $nisn]);
     }
 }

@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/BaseModel.php';
@@ -8,6 +9,7 @@ class Siswa extends BaseModel {
         parent::__construct();
     }
 
+    // Menampilkan semua siswa
     public function getAll() {
         $sql = "SELECT siswa.*, kelas.nama_kelas
                 FROM siswa
@@ -15,63 +17,94 @@ class Siswa extends BaseModel {
                 ON siswa.id_kelas = kelas.id_kelas
                 ORDER BY siswa.nama ASC";
 
-        return $this->pdo->query($sql)->fetchAll();
+        $stmt = $this->pdo->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getByNisn($nisn) {
-        $stmt = $this->pdo->prepare(
-            "SELECT * FROM siswa WHERE nisn = ?"
-        );
-
-        $stmt->execute([$nisn]);
-        return $stmt->fetch();
-    }
-
+    // Mencari siswa berdasarkan nama atau NISN
     public function cari($keyword) {
-        $stmt = $this->pdo->prepare(
-            "SELECT siswa.*, kelas.nama_kelas
-             FROM siswa
-             INNER JOIN kelas
-             ON siswa.id_kelas = kelas.id_kelas
-             WHERE siswa.nama LIKE ?
-                OR siswa.nisn LIKE ?
-             ORDER BY siswa.nama ASC"
-        );
+        $sql = "SELECT siswa.*, kelas.nama_kelas
+                FROM siswa
+                INNER JOIN kelas
+                ON siswa.id_kelas = kelas.id_kelas
+                WHERE siswa.nama LIKE :nama
+                   OR siswa.nisn LIKE :nisn
+                ORDER BY siswa.nama ASC";
 
-        $cari = "%" . $keyword . "%";
-        $stmt->execute([$cari, $cari]);
+        $stmt = $this->pdo->prepare($sql);
 
-        return $stmt->fetchAll();
+        $stmt->execute([
+            ':nama' => '%' . $keyword . '%',
+            ':nisn' => '%' . $keyword . '%'
+        ]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Mencari siswa berdasarkan NISN
+    public function getByNisn($nisn) {
+        $sql = "SELECT * FROM siswa
+                WHERE nisn = :nisn
+                LIMIT 1";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute([
+            ':nisn' => $nisn
+        ]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getById($nisn) {
+        return $this->getByNisn($nisn);
+    }
+
+    // Menambahkan siswa
     public function tambah($nisn, $nama, $alamat, $id_kelas) {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO siswa (nisn, nama, alamat, id_kelas)
-             VALUES (?, ?, ?, ?)"
-        );
+        $sql = "INSERT INTO siswa
+                (nisn, nama, alamat, id_kelas)
+                VALUES
+                (:nisn, :nama, :alamat, :id_kelas)";
+
+        $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            $nisn, $nama, $alamat, $id_kelas
+            ':nisn' => $nisn,
+            ':nama' => $nama,
+            ':alamat' => $alamat,
+            ':id_kelas' => $id_kelas
         ]);
     }
 
-    public function ubah($nisn, $nama, $alamat, $id_kelas) {
-        $stmt = $this->pdo->prepare(
-            "UPDATE siswa
-             SET nama = ?, alamat = ?, id_kelas = ?
-             WHERE nisn = ?"
-        );
+    // Mengedit siswa
+    public function edit($nisn, $nama, $alamat, $id_kelas) {
+        $sql = "UPDATE siswa
+                SET nama = :nama,
+                    alamat = :alamat,
+                    id_kelas = :id_kelas
+                WHERE nisn = :nisn";
+
+        $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            $nama, $alamat, $id_kelas, $nisn
+            ':nisn' => $nisn,
+            ':nama' => $nama,
+            ':alamat' => $alamat,
+            ':id_kelas' => $id_kelas
         ]);
     }
 
+    // Menghapus siswa
     public function hapus($nisn) {
-        $stmt = $this->pdo->prepare(
-            "DELETE FROM siswa WHERE nisn = ?"
-        );
+        $sql = "DELETE FROM siswa
+                WHERE nisn = :nisn";
 
-        return $stmt->execute([$nisn]);
+        $stmt = $this->pdo->prepare($sql);
+
+        return $stmt->execute([
+            ':nisn' => $nisn
+        ]);
     }
 }
