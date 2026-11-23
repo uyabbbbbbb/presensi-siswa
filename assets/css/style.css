@@ -1,15 +1,17 @@
+
+/* ==========================================
+   iOS LIQUID GLASS - APLIKASI PRESENSI
+   ========================================== */
+
 :root {
-    --bg1: #eef1f5;
-    --bg2: #dfe5ec;
-    --glass: rgba(255, 255, 255, 0.45);
-    --glass-strong: rgba(255, 255, 255, 0.62);
-    --glass-border: rgba(255, 255, 255, 0.55);
-    --text: #111111;
-    --text-soft: #5c5c5c;
-    --line: rgba(255, 255, 255, 0.5);
-    --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    --shadow-soft: 0 4px 18px rgba(0, 0, 0, 0.06);
-    --radius: 22px;
+    --bg: #e8edf4;
+    --text: #1d1d1f;
+    --muted: #737780;
+    --glass: rgba(255, 255, 255, 0.48);
+    --glass-strong: rgba(255, 255, 255, 0.7);
+    --border: rgba(255, 255, 255, 0.8);
+    --shadow: 0 10px 35px rgba(30, 40, 60, 0.09);
+    --radius: 24px;
 }
 
 * {
@@ -22,82 +24,129 @@ html {
 }
 
 body {
-    margin: 0;
-    padding: 24px;
+    margin: 0 auto;
+    padding: 28px;
+    max-width: 1450px;
     min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Arial, sans-serif;
+    overflow-x: hidden;
+
+    font-family: -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Arial, sans-serif;
+
     color: var(--text);
+    line-height: 1.6;
+
     background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.75), transparent 35%),
-        radial-gradient(circle at top right, rgba(255,255,255,0.6), transparent 28%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,255,255,0.95),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(189,205,231,0.65),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(216,225,242,0.8),
+            transparent 45%
+        ),
+        linear-gradient(135deg, #f0f3f9, #dce4ef);
+
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
 }
 
-/* animasi halus */
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(14px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
 
-h1, h2, h3, p, form, table, nav, footer {
-    animation: fadeUp 0.45s ease;
-}
-
-/* judul */
 h1, h2, h3 {
-    margin-top: 0;
-    color: var(--text);
-    letter-spacing: -0.5px;
+    color: #1c1d22;
+    letter-spacing: -0.8px;
+    line-height: 1.2;
 }
 
 h1 {
-    font-size: 34px;
+    font-size: 38px;
     font-weight: 750;
+    margin: 20px 0 12px;
 }
 
 h2 {
-    font-size: 28px;
-    font-weight: 740;
-    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: 750;
+    margin: 20px 0 12px;
+}
+
+h3 {
+    font-size: 21px;
+    font-weight: 700;
 }
 
 p {
-    color: var(--text-soft);
-    margin-bottom: 18px;
+    color: var(--muted);
+    margin: 10px 0 20px;
 }
 
-/* liquid glass card style */
+a {
+    color: #30343d;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    color: #111;
+}
+
+/* ==========================================
+   LIQUID GLASS EFFECT
+   ========================================== */
+
 nav,
 form,
 table,
 footer {
     background: var(--glass);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
+
+    border: 1px solid var(--border);
+
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,0.95),
+        inset 0 -1px 1px rgba(255,255,255,0.2),
+        var(--shadow);
 }
 
-/* navbar */
+/* ==========================================
+   FLOATING NAVBAR
+   ========================================== */
+
 nav {
     position: sticky;
-    top: 14px;
+    top: 16px;
     z-index: 100;
-    display: block;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    width: fit-content;
+    max-width: 100%;
+    min-height: 64px;
+
+    padding: 9px;
+    margin-bottom: 35px;
+
+    border-radius: 100px;
+
     overflow-x: auto;
     white-space: nowrap;
-    padding: 10px;
-    margin-bottom: 26px;
-    border-radius: 24px;
     scrollbar-width: none;
+
     -webkit-overflow-scrolling: touch;
 }
 
@@ -109,72 +158,93 @@ nav a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-right: 6px;
-    padding: 11px 18px;
-    border-radius: 16px;
-    text-decoration: none;
-    color: #4b4b4b;
-    font-size: 14px;
-    font-weight: 600;
+
+    flex: 0 0 auto;
+
+    padding: 12px 19px;
+    border-radius: 100px;
+
+    font-size: 13px;
+    font-weight: 650;
+    color: #626772;
+
     transition: 0.25s ease;
 }
 
 nav a:hover {
-    background: rgba(255,255,255,0.45);
-    color: #111;
+    background: rgba(255,255,255,0.5);
+    color: #1c1d22;
     text-decoration: none;
 }
 
 nav a.active {
-    background: rgba(255,255,255,0.8);
-    color: #111;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.85),
-                0 6px 16px rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.92);
+    color: #17181c;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,0.08),
+        inset 0 1px 0 #fff;
 }
 
 nav a:active {
-    transform: scale(0.96);
+    transform: scale(0.95);
 }
 
-/* garis */
+/* ==========================================
+   DIVIDER
+   ========================================== */
+
 hr {
     border: none;
-    border-top: 1px solid rgba(255,255,255,0.4);
-    margin: 24px 0;
+    border-top: 1px solid rgba(255,255,255,0.7);
+    margin: 28px 0;
 }
 
-/* form */
+/* ==========================================
+   GLASS FORM
+   ========================================== */
+
 form {
-    padding: 24px;
+    padding: 28px;
+    margin: 20px 0;
+
     border-radius: var(--radius);
-    margin-bottom: 22px;
 }
 
 label {
     display: inline-block;
     margin-bottom: 8px;
+
     font-size: 13px;
     font-weight: 650;
-    color: #2c2c2c;
+    color: #434650;
 }
 
 input,
 select,
 textarea {
-    width: auto;
     max-width: 100%;
-    min-height: 46px;
-    padding: 12px 15px;
-    margin-top: 4px;
-    border: 1px solid rgba(255,255,255,0.45);
-    border-radius: 14px;
-    background: rgba(255,255,255,0.58);
-    color: #111;
+    min-height: 48px;
+
+    padding: 12px 16px;
+    margin: 5px 0 12px;
+
+    border: 1px solid rgba(255,255,255,0.85);
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.64);
+    color: #24252a;
+
     font-family: inherit;
-    font-size: 14px;
+    font-size: 15px;
+
     outline: none;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
-    transition: 0.25s ease;
+
+    box-shadow:
+        inset 0 1px 2px rgba(0,0,0,0.025),
+        0 1px 0 rgba(255,255,255,0.7);
+
+    transition: 0.2s ease;
 }
 
 input[type="text"],
@@ -185,50 +255,57 @@ textarea {
     min-width: 260px;
 }
 
-input:hover,
-select:hover,
-textarea:hover {
-    background: rgba(255,255,255,0.7);
-}
-
 input:focus,
 select:focus,
 textarea:focus {
-    background: rgba(255,255,255,0.82);
-    border-color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.95);
+    border-color: #fff;
+
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.9),
-        0 0 0 4px rgba(255,255,255,0.28);
+        0 0 0 4px rgba(255,255,255,0.35),
+        0 4px 14px rgba(0,0,0,0.04);
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: #7d7d7d;
+    color: #999da7;
 }
 
-/* tombol */
+/* ==========================================
+   iOS BUTTON
+   ========================================== */
+
 button,
 input[type="submit"] {
-    min-height: 45px;
-    padding: 12px 20px;
-    border: 1px solid rgba(255,255,255,0.45);
-    border-radius: 15px;
-    background: rgba(255,255,255,0.65);
-    color: #111;
-    font-size: 14px;
-    font-weight: 680;
+    min-height: 46px;
+    padding: 12px 23px;
+
+    border: 1px solid rgba(255,255,255,0.65);
+    border-radius: 100px;
+
+    background: #25272e;
+    color: #fff;
+
     font-family: inherit;
+    font-size: 14px;
+    font-weight: 650;
+
     cursor: pointer;
+
     box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.88),
-        0 8px 18px rgba(0,0,0,0.08);
-    transition: 0.22s ease;
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 6px 16px rgba(25,28,38,0.15);
+
+    transition: 0.2s ease;
 }
 
 button:hover,
 input[type="submit"]:hover {
-    background: rgba(255,255,255,0.82);
-    transform: translateY(-1px);
+    background: #3c3f48;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 22px rgba(25,28,38,0.18);
 }
 
 button:active,
@@ -237,66 +314,69 @@ input[type="submit"]:active {
 }
 
 button:disabled {
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
-/* link */
-a {
-    color: #1d1d1d;
-    text-decoration: none;
-    font-weight: 550;
-}
+/* ==========================================
+   GLASS TABLE
+   ========================================== */
 
-a:hover {
-    text-decoration: underline;
-}
-
-/* tabel */
 table {
     width: 100%;
+    margin: 22px 0;
+
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 24px;
+
+    border-radius: var(--radius);
     overflow: hidden;
 }
 
 th {
-    padding: 16px 18px;
-    background: rgba(255,255,255,0.5);
-    color: #5f5f5f;
+    padding: 18px 20px;
+
+    background: rgba(255,255,255,0.45);
+    color: #707580;
+
     font-size: 11px;
-    font-weight: 720;
+    font-weight: 750;
     text-transform: uppercase;
     letter-spacing: 0.7px;
     text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.35);
+
+    border-bottom: 1px solid rgba(255,255,255,0.55);
 }
 
 td {
-    padding: 16px 18px;
+    padding: 17px 20px;
+
+    background: rgba(255,255,255,0.1);
+    color: #333640;
+
     font-size: 14px;
-    color: #222;
-    border-bottom: 1px solid rgba(255,255,255,0.28);
-    background: rgba(255,255,255,0.18);
+
+    border-bottom: 1px solid rgba(255,255,255,0.4);
 }
 
 tbody tr:last-child td {
     border-bottom: none;
 }
 
-tbody tr {
-    transition: 0.2s ease;
-}
-
 tbody tr:hover td {
-    background: rgba(255,255,255,0.34);
+    background: rgba(255,255,255,0.4);
 }
 
-/* form dalam tabel */
+/* ==========================================
+   TABLE ACTION BUTTONS
+   ========================================== */
+
 td form {
+    display: inline-block;
+    width: auto;
     padding: 0;
     margin: 0;
+
     background: transparent;
     border: none;
     box-shadow: none;
@@ -304,111 +384,223 @@ td form {
     -webkit-backdrop-filter: none;
 }
 
-td a {
+td a,
+td button {
     display: inline-block;
-    padding: 8px 14px;
-    margin-right: 6px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.55);
-    border: 1px solid rgba(255,255,255,0.4);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+
+    min-height: 36px;
+    padding: 8px 15px;
+    margin: 2px 4px 2px 0;
+
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 100px;
+
+    background: rgba(255,255,255,0.65);
+    color: #343740;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
-td a:hover {
-    background: rgba(255,255,255,0.8);
+td a:hover,
+td button:hover {
+    background: rgba(255,255,255,0.95);
+    color: #17181c;
     text-decoration: none;
 }
 
-td button {
-    min-height: 38px;
-    padding: 8px 14px;
-    background: rgba(255,255,255,0.55);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
-}
+/* ==========================================
+   FOOTER
+   ========================================== */
 
-td button:hover {
-    background: rgba(255,255,255,0.82);
-}
-
-/* footer */
 footer {
     margin-top: 30px;
-    padding: 18px 20px;
-    border-radius: 20px;
+    padding: 20px;
+
+    border-radius: 22px;
     text-align: center;
 }
 
 footer p {
     margin: 0;
-    color: #686868;
-    font-size: 13px;
+    font-size: 12px;
+    color: #747985;
 }
 
-/* scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+/* ==========================================
+   ANIMATION
+   ========================================== */
+
+@keyframes glassAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(100, 100, 100, 0.28);
-    border-radius: 12px;
+body > h1,
+body > h2,
+body > p,
+body > form,
+body > table {
+    animation: glassAppear 0.45s ease both;
 }
 
-::-webkit-scrollbar-track {
-    background: transparent;
-}
+/* ==========================================
+   MOBILE - iPHONE / ANDROID
+   ========================================== */
 
-/* mobile */
 @media (max-width: 768px) {
+
     body {
+        width: 100%;
         padding: 14px;
+        overflow-x: hidden;
     }
 
     h1 {
-        font-size: 28px;
+        font-size: 29px;
+        margin-top: 18px;
     }
 
     h2 {
-        font-size: 24px;
+        font-size: 25px;
     }
 
+    p {
+        font-size: 13px;
+    }
+
+    /* Navbar swipe */
+
     nav {
-        top: 8px;
-        border-radius: 20px;
+        top: 10px;
+        width: 100%;
+        max-width: 100%;
+        min-height: 58px;
+
+        margin-bottom: 25px;
+        padding: 7px;
+        gap: 4px;
+
+        border-radius: 100px;
+
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
     }
 
     nav a {
-        font-size: 13px;
-        padding: 10px 14px;
+        padding: 11px 15px;
+        font-size: 12px;
+        scroll-snap-align: start;
     }
+
+    /* Form */
 
     form {
-        padding: 18px;
+        width: 100%;
+        padding: 19px 16px;
+        border-radius: 23px;
     }
 
-    input,
+    label {
+        display: block;
+    }
+
+    input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]),
     select,
     textarea {
+        display: block;
         width: 100%;
         min-width: 0 !important;
-        margin-bottom: 8px;
+        max-width: 100%;
+
+        min-height: 49px;
+        font-size: 16px;
+        border-radius: 15px;
     }
+
+    form > button,
+    form > input[type="submit"] {
+        width: 100%;
+    }
+
+    /* Tabel bisa digeser */
 
     table {
         display: block;
+        width: 100%;
+        max-width: 100%;
+
         overflow-x: auto;
         white-space: nowrap;
+
+        border-radius: 22px;
         -webkit-overflow-scrolling: touch;
     }
 
-    th, td {
+    th,
+    td {
         padding: 14px;
+        font-size: 12px;
+    }
+
+    td form {
+        display: inline-block;
+        width: auto;
+        padding: 0;
+        margin: 0;
+    }
+
+    td button,
+    td a {
+        width: auto;
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    footer {
+        border-radius: 20px;
+        padding: 18px;
     }
 }
 
-/* aksesibilitas */
+/* ==========================================
+   SMALL PHONES
+   ========================================== */
+
+@media (max-width: 380px) {
+
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    nav a {
+        padding: 10px 12px;
+    }
+
+    form {
+        padding: 16px 13px;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
