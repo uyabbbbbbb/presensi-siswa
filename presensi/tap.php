@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $nisn = trim($_POST['nisn'] ?? '');
 
-    // Memeriksa apakah NISN berisi 10 digit angka
+    // Memeriksa NISN harus 10 digit angka
     if (!preg_match('/^[0-9]{10}$/', $nisn)) {
 
         $pesan = "NISN harus terdiri dari 10 digit angka.";
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Mengambil hasil dari model Presensi
             if (is_array($hasil)) {
 
-                $status = $hasil['status'] ?? false;
+                $status = (bool) ($hasil['status'] ?? false);
                 $pesan = $hasil['pesan'] ?? "Presensi diproses.";
 
                 // Mengosongkan input jika berhasil
@@ -70,7 +70,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
 <?php endif; ?>
 
-<form method="POST">
+<form method="POST" novalidate>
 
     <label for="nisn">NISN Siswa</label>
     <br>
@@ -81,10 +81,8 @@ require_once __DIR__ . '/../includes/navbar.php';
         name="nisn"
         maxlength="10"
         inputmode="numeric"
-        pattern="[0-9]{10}"
         placeholder="Masukkan 10 digit NISN"
         value="<?= htmlspecialchars($nisn) ?>"
-        required
         autofocus
     >
 
