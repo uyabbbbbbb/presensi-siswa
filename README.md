@@ -20,7 +20,8 @@ presensi siswa/
 │   ├── css/
 │   │   └── style.css
 │   └── js/
-│       └── script.js
+│       ├── script.js
+│       └── liquid-glass.js
 ├── config/
 │   └── Database.php
 ├── includes/
@@ -76,8 +77,9 @@ Struktur di atas menunjukkan letak file utama aplikasi. Setiap folder memisahkan
 
 Folder ini menyimpan file tampilan website.
 
-- `assets/css/style.css` — mengatur warna, ukuran, jarak, tombol, dan tampilan halaman.
+- `assets/css/style.css` — mengatur tampilan bergaya iOS Liquid Glass, seperti kaca transparan, efek blur, pantulan cahaya, tombol membulat, animasi, serta tampilan yang menyesuaikan layar HP.
 - `assets/js/script.js` — berisi JavaScript untuk interaksi pada website.
+- `assets/js/liquid-glass.js` — memberikan efek cahaya yang mengikuti kursor dan efek saat tombol atau menu navigasi ditekan dan ditahan. Efek ini hanya mengubah tampilan, bukan proses data PHP.
 
 ### Folder `config`
 
@@ -90,7 +92,7 @@ Folder ini menyimpan bagian yang digunakan berulang di beberapa halaman.
 - `includes/auth.php` — memeriksa sesi login agar halaman khusus admin tidak dibuka sembarangan.
 - `includes/header.php` — bagian awal tampilan halaman, termasuk pemanggilan CSS.
 - `includes/navbar.php` — menu navigasi untuk berpindah ke dashboard, kelas, siswa, tap kartu, dan rekap presensi.
-- `includes/footer.php` — bagian penutup tampilan halaman.
+- `includes/footer.php` — bagian penutup tampilan halaman. File ini juga memanggil `assets/js/liquid-glass.js` agar efek interaktif aktif di halaman yang memakai footer.
 
 ### Folder `models`
 
@@ -127,6 +129,18 @@ Halaman dalam folder `siswa` menggunakan `models/Siswa.php`. Formulir siswa juga
 
 Halaman dalam folder `presensi` menggunakan `models/Presensi.php` untuk mengakses data presensi.
 
+## Tampilan iOS Liquid Glass
+
+Tampilan website menggunakan gaya iOS dengan efek kaca transparan (*Liquid Glass*). Efeknya dibuat menggunakan CSS dan JavaScript, bukan fitur asli sistem operasi iOS.
+
+- **Kaca transparan:** navbar, formulir, tabel, dan footer terlihat seperti lapisan kaca dengan efek blur.
+- **Efek cahaya:** pantulan pada tombol dan menu mengikuti posisi kursor.
+- **Tekan dan tahan:** tombol dan menu memberikan animasi saat ditekan.
+- **Animasi halus:** perpindahan efek terasa lebih lembut.
+- **Responsif:** tampilan menyesuaikan ukuran layar komputer dan HP.
+
+`style.css` mengatur bentuk dan animasinya, sedangkan `liquid-glass.js` menangani interaksi saat pengguna menggerakkan kursor atau menekan tombol. File JavaScript tersebut dipanggil melalui `includes/footer.php`.
+
 ## Alur Kerja Aplikasi
 
 1. Admin membuka `login.php` dan memasukkan username serta password.
@@ -151,7 +165,7 @@ Satu kelas dapat mempunyai banyak siswa. Satu siswa juga dapat mempunyai banyak 
 
 ## Teknologi
 
-PHP Native (OOP), MariaDB/MySQL, PDO, HTML, CSS, JavaScript, dan Laragon.
+PHP Native (OOP), MariaDB/MySQL, PDO, HTML, CSS (Liquid Glass), JavaScript, dan Laragon.
 
 ## Kegunaan Website
 
