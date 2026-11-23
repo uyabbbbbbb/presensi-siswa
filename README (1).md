@@ -70,7 +70,7 @@ presensi siswa/
 6. Akses `http://localhost/presensi%20siswa/` melalui browser.
 7. Login dengan akun administrator yang telah dibuat.
 
-> **Akun demo:** Isi username dan password akun **khusus demo** sebelum pengumpulan. Jangan mengunggah password pribadi atau konfigurasi rahasia.
+> **Akun demo:** Isi username dan password akun **khusus demo** jika diperlukan. Jangan mengunggah password pribadi atau konfigurasi rahasia.
 >
 > Username: `[isi username demo]`  
 > Password: `[isi password demo]`
@@ -79,9 +79,7 @@ presensi siswa/
 
 Aplikasi menggunakan tabel `users`, `kelas`, `siswa`, dan `presensi`. Satu kelas dapat memiliki banyak siswa, dan satu siswa dapat memiliki banyak catatan presensi. Tabel `users` digunakan untuk autentikasi administrator.
 
-**Tambahkan file ERD di `docs/erd.png` agar gambar di bawah tampil:**
-
-![ERD Aplikasi Presensi Siswa](docs/erd.png)
+**ERD:** Satu kelas memiliki banyak siswa, dan satu siswa dapat memiliki banyak catatan presensi.
 
 ## Foto tampilan aplikasi
 
